@@ -30,8 +30,13 @@ class _SideMenu extends State<SideMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("bar")),
-      body: Center(
-        child: _widgetOptions[_selectedIndex],
+      body: Stack(
+        children: [
+          HomeScreen(), // This is the CameraStreamWidget taking the full screen
+          Center(
+              child:
+                  _widgetOptions[_selectedIndex]), // This is your main content
+        ],
       ),
       drawer: Drawer(
         child: ListView(

@@ -1,5 +1,9 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:tflite_flutter/tflite_flutter.dart' as tfl;
+
+
+
 
 class CameraStreamWidget extends StatefulWidget {
   const CameraStreamWidget({super.key});
@@ -22,6 +26,13 @@ class _CameraStreamWidgetState extends State<CameraStreamWidget> {
   _initCamera() async {
     final cameras = await availableCameras();
     final firstCamera = cameras.first;
+    tfl.Interpreter interpreter = await tfl.Interpreter.fromAsset('model.tflite');
+    var input = <double>[]; // your preprocessed image data
+    var output = List<double>.filled(28, 0).reshape([1, 28]); // adjust this based on your model's output
+
+    interpreter.run(input, output);
+
+
 
     _controller = CameraController(
       firstCamera,
